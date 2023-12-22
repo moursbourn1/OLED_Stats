@@ -13,5 +13,7 @@
     "setuptools",
     "vcgencmd",
     "webfont"
-  ]
+  ],
+  "python.defaultInterpreterPath": "~/Code/.venv/bin/python"
+ 
 }
