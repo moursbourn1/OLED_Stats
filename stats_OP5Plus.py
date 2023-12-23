@@ -16,6 +16,9 @@ import socket
 
 from datetime import datetime, timedelta
 import pytz
+import os
+
+current_directory = os.path.dirname(os.path.abspath(__file__))
 
 hostname = socket.gethostname()
 
@@ -50,13 +53,8 @@ disp = adafruit_ssd1306.SSD1306_I2C(128, 64, i2c, addr=0x3C)
 
 # 128x64 display with hardware SPI:
 # disp = Adafruit_SSD1306.SSD1306_128_64(rst=RST, dc=DC, spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE, max_speed_hz=8000000))
-disp.init_display()
-# Initialize library.
-# disp.begin()
 
-# Clear display.
-# disp.clear()
-# disp.display()
+disp.init_display()
 
 # Create blank image for drawing.
 # Make sure to create image with mode '1' for 1-bit color.
@@ -81,13 +79,20 @@ x = 0
 
 # Load default font.
 # font = ImageFont.load_default()
-font = ImageFont.truetype('PixelOperator.ttf', 16)
-
+# font = ImageFont.truetype('PixelOperator.ttf', 16)
+font_path = os.path.join(current_directory, 'PixelOperator.ttf')
+if os.path.exists(font_path):
+    # The font file exists, proceed with loading the font
+    font = ImageFont.truetype(font_path, 16)
+else:
+    # The font file does not exist in the current directory
+    print("Font file 'PixelOperator.ttf' not found.")
+    
 # Alternatively load a TTF font.  Make sure the .ttf font file is in the same directory as the python script!
 # Some other nice fonts to try: http://www.dafont.com/bitmap.php
 # font = ImageFont.truetype('Minecraftia.ttf', 8)
 # Display Refresh
-LOOPTIME = 1
+LOOPTIME = 0.001666
 while True:
 
     # Draw a black filled box to clear the image.
